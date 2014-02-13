@@ -10,8 +10,10 @@
 % License for the specific language governing permissions and limitations under
 % the License.
 -module(couch_plugins).
--include("couch_db.hrl").
+
 -export([install/1, uninstall/1]).
+
+-include_lib("couch/include/couch_db.hrl").
 
 % couch_plugins:install({"geocouch", "http://127.0.0.1:8000", "1.0.0", [{"R15B03", "+XOJP6GSzmuO2qKdnjO+mWckXVs="}]}).
 % couch_plugins:install({"geocouch", "http://people.apache.org/~jan/", "couchdb1.2.x_v0.3.0-11-gd83ba22", [{"R15B03", "ZetgdHj2bY2w37buulWVf3USOZs="}]}).
