@@ -41,7 +41,7 @@ handle_req(#httpd{method='GET',path_parts=[_, Name0 | Path0]}=Req) ->
     Name = ?b2l(Name0),
     Path = lists:map(fun binary_to_list/1, Path0),
     OTPRelease = erlang:system_info(otp_release),
-    PluginVersion = couch_config:get("plugins", Name),
+    PluginVersion = config:get("plugins", Name),
     CouchDBVersion = couch_server:get_version(short),
     FullName = string:join([Name, PluginVersion, OTPRelease, CouchDBVersion], "-"),
     FullPath = filename:join([FullName, "priv", "www", string:join(Path, "/")]) ++ "/",
@@ -51,7 +51,7 @@ handle_req(Req) ->
     couch_httpd:send_method_not_allowed(Req, "POST").
 
 plugin_dir() ->
-  couch_config:get("couchdb", "plugin_dir").
+  config:get("couchdb", "plugin_dir").
 do_install(false, Plugin) ->
     couch_plugins:install(Plugin);
 do_install(true, Plugin) ->

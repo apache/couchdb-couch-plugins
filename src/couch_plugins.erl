@@ -17,7 +17,7 @@
 % couch_plugins:install({"geocouch", "http://people.apache.org/~jan/", "couchdb1.2.x_v0.3.0-11-gd83ba22", [{"R15B03", "ZetgdHj2bY2w37buulWVf3USOZs="}]}).
 
 plugin_dir() ->
-  couch_config:get("couchdb", "plugin_dir").
+  config:get("couchdb", "plugin_dir").
 
 log(T) ->
   ?LOG_DEBUG("[couch_plugins] ~p ~n", [T]).
@@ -82,11 +82,11 @@ uninstall({Name, _BaseUrl, Version, _Checksums}) ->
 
 -spec register_plugin(string(), string()) -> ok.
 register_plugin(Name, Version) ->
-  couch_config:set("plugins", Name, Version).
+  config:set("plugins", Name, Version).
 
 -spec unregister_plugin(string()) -> ok.
 unregister_plugin(Name) ->
-  couch_config:delete("plugins", Name).
+  config:delete("plugins", Name).
 
 %% * * *
 
@@ -110,16 +110,16 @@ loop_config(Name, Version, Fun) ->
 
 -spec load_config_file(string(), function()) -> ok.
 load_config_file(File, Fun) ->
-    {ok, Config} = couch_config:parse_ini_file(File),
+    {ok, Config} = config:parse_ini_file(File),
     lists:foreach(Fun, Config).
 
 -spec set_config({{string(), string()}, string()}) -> ok.
 set_config({{Section, Key}, Value}) ->
-    ok = couch_config:set(Section, Key, Value).
+    ok = config:set(Section, Key, Value).
 
 -spec delete_config({{string(), string()}, _Value}) -> ok.
 delete_config({{Section, Key}, _Value}) ->
-    ok = couch_config:delete(Section, Key).
+    ok = config:delete(Section, Key).
 
 -spec file_names(string(), string()) -> string().
 file_names(Name, Version) ->
